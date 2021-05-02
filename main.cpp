@@ -4,6 +4,7 @@
 #include <thread>
 #include <vector>
 #include "win.h"
+#include "time.h"
 #include "create_box.h"
 
 std::wstring tetromino[7];
@@ -75,6 +76,7 @@ using namespace std::literals::chrono_literals;
 
 int main()
 {
+    srand (time(NULL));
     createAssests(tetromino);
 
     pField = new unsigned char[nFieldWidth * nFieldHeight];
@@ -98,7 +100,7 @@ int main()
 
     bool bGameOver = false;
     bool bKey[4];
-    int nCurrentPiece = 0;
+    int nCurrentPiece = rand() % 7;
     int nCurrentRotation = 0;
     int nCurrentX = nFieldWidth / 2;
     int nCurrentY = 0;
