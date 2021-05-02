@@ -93,7 +93,7 @@ int main()
     cbreak(); /* take input chars one at a time, no wait for \n */
     noecho();
     nodelay(stdscr, TRUE);
-
+    curs_set(0);
     keypad(stdscr, TRUE); /* enable keyboard mapping */
     int startx = (LINES - nFieldHeight) / 2;
     int starty = (COLS - nFieldWidth) / 2;
