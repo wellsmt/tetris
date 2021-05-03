@@ -11,11 +11,11 @@ find_package(Curses REQUIRED)
 
 include_directories(${CURSES_INCLUDE_DIR})
 
-add_library(tetromino tetromino.cpp)
+add_library(tetromino tetromino.cpp board.cpp rotate.cpp)
 
-add_executable(tetris main.cpp board.cpp rotate.cpp)
+add_executable(tetris main.cpp)
 target_link_libraries(tetris tetromino ${CURSES_LIBRARIES} )
 
-add_executable(main_test main_test.cpp tetromino_test.cpp tetromino.cpp board.cpp rotate.cpp)
-target_link_libraries(main_test GTest::Main)
-add_test(main_test main_test)
+add_executable(test_main tetromino_test.cpp)
+target_link_libraries(test_main GTest::Main tetromino)
+add_test(test_main test_main)
