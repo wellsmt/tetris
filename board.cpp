@@ -28,15 +28,14 @@ void Board::init()
     }
 }
 
-void Board::lock(const int piece, const int rotation, const int x, const int y)
+void Board::lock(Tetromino tetromino)
 {
-    Tetromino tetromino;
     for (int px = 0; px < 4; px++)
     {
         for (int py = 0; py < 4; py++)
         {
-            if (tetromino.get(piece)[Rotate(px, py, rotation)] == L'X')
-                this->pField[(y + py) * this->_width + (x + px)] = piece + 1;
+            if (tetromino.current()[Rotate(px, py, tetromino.rotation())] == L'X')
+                this->pField[(tetromino.posy() + py) * this->_width + (tetromino.posx() + px)] = tetromino.index() + 1;
         }
     }
 }

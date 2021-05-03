@@ -1,6 +1,8 @@
 #ifndef _BOARD_H_
 #define _BOARD_H_
 
+class Tetromino;
+
 class Board {
 private:
     int _width;
@@ -20,7 +22,7 @@ public:
     unsigned char* field();
 
     void init();
-    void lock(const int piece, const int rotation, const int x, const int y);
+    void lock(Tetromino tetromino);
 };
 
 #endif
