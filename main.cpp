@@ -3,7 +3,6 @@
 #include <ncurses.h>
 #include <thread>
 #include <vector>
-#include "win.h"
 #include "time.h"
 #include "board.h"
 #include "rotate.h"
@@ -25,8 +24,6 @@ int kbhit(void)
     }
 }
 
-WINDOW *create_newwin(int height, int width, int starty, int startx);
-void destroy_win(WINDOW *local_win);
 void draw(Board board);
 void draw_piece(const int piece, const int rotation, const int x, const int y);
 
@@ -47,9 +44,6 @@ int main()
     Tetromino tetromino;
     Board board(12, 18);
     board.init();
-
-    int startx = (LINES - board.height()) / 2;
-    int starty = (COLS - board.width()) / 2;
 
     bool bGameOver = false;
     bool bKey[4];
