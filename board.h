@@ -15,6 +15,9 @@ public:
             pField = new unsigned char[this->_width * this->_height];
         }
     
+    ~Board(){
+        delete pField;
+    }
     int width();
 
     int height();
