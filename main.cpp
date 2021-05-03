@@ -28,6 +28,8 @@ int kbhit(void)
 WINDOW *create_newwin(int height, int width, int starty, int startx);
 void destroy_win(WINDOW *local_win);
 void draw(Board board);
+void draw_piece(const int piece, const int rotation, const int x, const int y);
+
 using namespace std::literals::chrono_literals;
 
 int main()
@@ -103,14 +105,7 @@ int main()
                 nCurrentY++;
             } else {
                 // Lock the current piece in the field
-                for(int px = 0;px < 4; px++)
-                {
-                    for(int py = 0;py < 4;py++)
-                    {
-                        if(tetromino.get(nCurrentPiece)[Rotate(px, py, nCurrentRotation)] == L'X')
-                            board.field()[(nCurrentY + py) * board.width() + (nCurrentX + px)] = nCurrentPiece + 1;
-                    }
-                }
+                board.lock(nCurrentPiece, nCurrentRotation, nCurrentX, nCurrentY);
 
                 for(int py=0;py < 4;py++)
                 {
@@ -149,15 +144,7 @@ int main()
 
         draw(board);
 
-        // Draw Current Piece
-        for (int px = 0; px < 4; px++)
-        {
-            for (int py = 0; py < 4; py++)
-            {
-                if (tetromino.get(nCurrentPiece)[Rotate(px, py, nCurrentRotation)] == L'X')
-                    mvaddch(py + 2 + nCurrentY, px + 2 + nCurrentX, nCurrentPiece + 65);
-            }
-        }
+        draw_piece(nCurrentPiece, nCurrentRotation, nCurrentX, nCurrentY);
 
         if(!vLines.empty())
         {
@@ -194,4 +181,18 @@ void draw(Board board)
             mvaddch(y + 2, x + 2, L" ABCDEFG=#"[board.field()[y * board.width() + x]]);
         }
     }
+}
+
+void draw_piece(const int piece, const int rotation, const int x, const int y)
+{
+    Tetromino tetromino;
+// Draw Current Piece
+        for (int px = 0; px < 4; px++)
+        {
+            for (int py = 0; py < 4; py++)
+            {
+                if (tetromino.get(piece)[Rotate(px, py, rotation)] == L'X')
+                    mvaddch(py + 2 + y, px + 2 + x, piece + 65);
+            }
+        }
 }

@@ -6,6 +6,7 @@
 class Tetromino {
 private:
     std::wstring _shape[7];
+
 public:
     Tetromino();
 

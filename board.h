@@ -20,6 +20,7 @@ public:
     unsigned char* field();
 
     void init();
+    void lock(const int piece, const int rotation, const int x, const int y);
 };
 
 #endif
