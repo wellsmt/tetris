@@ -2,14 +2,24 @@
 #include "tetromino.h"
 #include "rotate.h"
 
-int Board::width()
+const int Board::width() const
 {
     return this->_width;
 }
 
-int Board::height()
+const int Board::height() const 
 {
     return this->_height;
+}
+
+unsigned char & Board::operator()(const size_t row, const size_t col)
+{
+    return this->pField[row * this->_width + col];
+}
+
+unsigned char Board::operator()(const size_t row, const size_t col) const
+{
+    return this->pField[row * this->_width + col];
 }
 
 unsigned char *Board::field()
@@ -35,7 +45,7 @@ void Board::lock(Tetromino tetromino)
         for (int py = 0; py < 4; py++)
         {
             if (tetromino.current()[Rotate(px, py, tetromino.rotation())] == L'X')
-                this->pField[(tetromino.posy() + py) * this->_width + (tetromino.posx() + px)] = tetromino.index() + 1;
+                this->pField[(tetromino.posy() + py) * this->width() + (tetromino.posx() + px)] = tetromino.index() + 1;
         }
     }
 }

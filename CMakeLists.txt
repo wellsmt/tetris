@@ -16,6 +16,6 @@ add_library(tetromino tetromino.cpp board.cpp rotate.cpp)
 add_executable(tetris main.cpp)
 target_link_libraries(tetris tetromino ${CURSES_LIBRARIES} )
 
-add_executable(test_main tetromino_test.cpp)
+add_executable(test_main tetromino_test.cpp board_test.cpp)
 target_link_libraries(test_main GTest::Main tetromino)
 add_test(test_main test_main)

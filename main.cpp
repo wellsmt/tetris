@@ -83,7 +83,6 @@ int main()
         {
             tetromino = tetromino.right();
         }
-
         if(bKey[1] && tetromino.left().fit(board))
         {
             tetromino = tetromino.left();
@@ -117,25 +116,23 @@ int main()
 
                 for(int py=0;py < 4;py++)
                 {
-                    if(tetromino.posx() + py < board.height() - 1)
+                    if(tetromino.posy() + py < board.height() - 1)
                     {
                         bool bLine = true;
                         for(int px = 1;px < board.width()-1;px++)
                         {
-                            bLine &= (board.field()[(tetromino.posy() + py) * board.width() + px]) != 0;
+                            bLine &= board(tetromino.posy() + py, px) != 0;
                         }
 
                         if(bLine)
                         {
                             for(int px = 1;px < board.width() - 1;px++)
-                                board.field()[(tetromino.posy() + py) * board.width() + px] = 8;
+                                board(tetromino.posy() + py, px) = 8;
 
                             vLines.push_back(tetromino.posy() + py);
                         }
                     }
                 }
-
-                // have we created any full horizontal lines
 
                 // choose the next piece
                 tetromino.next(board);
@@ -162,9 +159,9 @@ int main()
                 {
                     for(int py = v;py > 0;py--)
                     {
-                        board.field()[py * board.width() + px] = board.field()[(py - 1) * board.width() + px];
+                        board(py, px) = board(py - 1, px);
                     }
-                    board.field()[px] = 0;
+                    board(0, px) = 0;
                 }
             }
             vLines.clear();
@@ -183,7 +180,7 @@ void draw(Board board)
     {
         for (int y = 0; y < board.height(); y++)
         {
-            mvaddch(y + 2, x + 2, L" ABCDEFG=#"[board.field()[y * board.width() + x]]);
+            mvaddch(y + 2, x + 2, L" ABCDEFG=#"[board(y, x)]);
         }
     }
 }
