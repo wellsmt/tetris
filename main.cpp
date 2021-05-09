@@ -1,27 +1,13 @@
 #include <chrono>
 #include <iostream>
-#include <ncurses.h>
 #include <thread>
 #include <vector>
 #include "time.h"
 #include "board.h"
 #include "rotate.h"
 #include "tetromino.h"
-
-int kbhit(void)
-{
-    int ch = getch();
-
-    if (ch != ERR)
-    {
-        ungetch(ch);
-        return 1;
-    }
-    else
-    {
-        return 0;
-    }
-}
+#include <ncurses.h>
+#include "ncurses_setup.h"
 
 void draw(Board board);
 void draw_piece(Tetromino tetromino);
@@ -32,13 +18,7 @@ int main()
 {
     srand (time(NULL));
 
-    initscr(); /* initialize the curses library */
-    start_color();
-    cbreak(); /* take input chars one at a time, no wait for \n */
-    noecho();
-    nodelay(stdscr, TRUE);
-    curs_set(0);
-    keypad(stdscr, TRUE); /* enable keyboard mapping */
+    ncurses_setup();
    
     Board board(12, 18);
     board.init();
@@ -64,14 +44,8 @@ int main()
         nSpeedCounter++;
         bForceDown = (nSpeedCounter == nSpeed);
         // INPUT
-        if (kbhit())
-        {
-            ch = getch();
-        }
-        else
-        {
-            ch = 0;
-        }
+        ch = kbhit();
+        
         bKey[0] = (ch == 261); // R
         bKey[1] = (ch == 260); // L
         bKey[2] = (ch == 258); // D
