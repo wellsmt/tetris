@@ -34,6 +34,8 @@ int main()
     int nSpeed = 20;
     int nSpeedCounter = 0;
     bool bForceDown = false;
+    int nPieceCount = 0;
+    int nScore = 0;
 
     std::vector<int> vLines;
 
@@ -88,6 +90,12 @@ int main()
                 // Lock the current piece in the field
                 board.lock(tetromino);
 
+                nPieceCount++;
+                if(nPieceCount % 10 == 0)
+                {
+                    if(nSpeed >= 10) nSpeed--;
+                }
+
                 for(int py=0;py < 4;py++)
                 {
                     if(tetromino.posy() + py < board.height() - 1)
@@ -108,6 +116,9 @@ int main()
                     }
                 }
 
+                nScore += 25;
+                if(!vLines.empty()) nScore += (1 << vLines.size()) * 100;
+
                 // choose the next piece
                 tetromino.next(board);
 
@@ -121,6 +132,8 @@ int main()
         draw(board);
 
         draw_piece(tetromino);
+
+        mvprintw(2, 16, "SCORE: %d", nScore);
 
         if(!vLines.empty())
         {
